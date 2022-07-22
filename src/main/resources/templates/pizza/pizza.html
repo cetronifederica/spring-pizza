@@ -3,11 +3,43 @@
   <head>
     <!-- Required meta tags -->
     <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
-    <title>Hello, world!</title>
+    <title>Spring Pizzeria</title>
   </head>
   <body>
-  <nav th:replace="fragments/navbar :: navbar('book')"></nav>
+  <nav th:replace="fragments/navbar :: navbar('pizza')"></nav>
     <h1>Le nostre pizze</h1>
+    <div> 
+    <a class="btn btn-primary" th:href="@{/add}">New Pizza</a>
+    </div>
+    
+    <div class="container text-center w-75 mt-3">
+      <div>
+        <table class="table mb-5">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrizione</th>
+              <th>Prezzo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="pizza : ${pizzaList}">
+              <td th:text="${pizza.name}"></td>
+              <td th:text="${pizza.description}"></td>
+              <td th:text="${pizza.price}"></td>
+              <td>
+	  				<a class="btn btn-primary" th:href="@{|/edit/${pizza.Id}|}" title="Edit">
+	  					<i class="fa-solid fa-pen-to-square"></i>
+	  				</a>
+	  				<a class="btn btn-primary" th:href="@{|/delete/${pizza.Id}|}" title="Delete" onclick="return confirm('Are your sure?')">
+	  					
+	  					<i class="fa-solid fa-trash-can"></i>
+	  				</a>
+	  			</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

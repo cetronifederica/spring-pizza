@@ -7,36 +7,53 @@
   <body>
   	<nav th:replace="fragments/navbar :: navbar('pizza')"></nav>
   	<div class="container">
-  		<h1></h1>
+  		<h1 th:text="${pizza.id != null} ? 'Edit Pizza' : 'New Pizza'"></h1>
   		<hr/>
- 
-  		
   		<form
   			id="form-pizza"
   			th:object="${pizza}"
-  			th:action="@{/pizzas/add}"
+  			th:action="@{/save}"
   			method="POST"
   		>
+  		<ul>
+		      <li 
+		         th:each="err : ${#fields.allErrors()}" 
+		         th:text="${err}">
+		      </li>
+			</ul>
   			<div class="row">
 	  			<div class="col-6 mb-3">
 	  				<label class="form-label" for="name">Nome</label>
 	  				<input type="text" id="name" class="form-control" th:field="*{name}" th:errorClass="is-invalid">
-	  				
+	  				<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+  					<ul>
+  						<li th:each="err : ${#fields.errors('name')}" th:text="${err}">
+  					</ul>
+  				</div>
 	  			</div>
 	  			<div class="col-6 mb-3">
 	  				<label class="form-label" for="price">Prezzo</label>
 		  			<input type="number" id="price" class="form-control" th:field="*{price}" th:errorClass="is-invalid">
-		  			
+		  			<div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+  					<ul>
+  						<li th:each="err : ${#fields.errors('price')}" th:text="${err}">
+  					</ul>
+  				</div>
 	  			</div>
   			</div>	  			
   			<div class="mb-3">
   				<label class="form-label" for="description">Descrizione</label>
 	  			<textarea id="synopsis" class="form-control" th:field="*{description}" rows="5"></textarea>
+	  			<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+  					<ul>
+  						<li th:each="err : ${#fields.errors('description')}" th:text="${err}">
+  					</ul>
+  				</div>
   			</div>
   			
   			<div>
-  				<button type="submit" class="btn btn-danger">Salva</button>
-  				<a class="btn btn-danger" href="/pizza">Cancella</a>
+  				<button type="submit" class="btn btn-primary">Salva</button>
+  				<a class="btn btn-primary" href="/pizza">Cancella</a>
   			</div>
   		</form>
   	</div>
