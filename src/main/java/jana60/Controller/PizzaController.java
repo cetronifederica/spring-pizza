@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,18 @@ public class PizzaController {
 	@PostMapping("/save") // sezione di aggiunta della pizza al database
 	public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br, Model model) {
 		boolean hasErrors = br.hasErrors();
+		boolean validateName = true;
+		if (formPizza.getId() != null) {
+			Pizza pizzaBeforeUpdate = repo.findById(formPizza.getId()).get();
+
+			if (pizzaBeforeUpdate.getName().equals(formPizza.getName())) {
+				validateName = false;
+			}
+		}
+		if (validateName && repo.countByName(formPizza.getName()) != null) {
+			br.addError(new FieldError("pizza", "name", "I nomi delle pizze devono essere unici"));
+			hasErrors = true;
+		}
 
 		if (br.hasErrors()) {
 			return "/pizza/add";
