@@ -9,9 +9,10 @@
   	<div class="container">
   		<h1 th:text="${pizza.id != null} ? 'Edit Pizza' : 'New Pizza'"></h1>
   		<hr/>
+  		<!-- l'object deve avere lo stesso nome messo nel get mapping tra "" prima di new Bibite -->
   		<form
   			id="form-pizza"
-  			th:object="${pizza}"
+  			th:object="${newDrink}" 
   			th:action="@{/save}"
   			method="POST"
   		>

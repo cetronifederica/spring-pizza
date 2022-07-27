@@ -6,5 +6,5 @@ import jana60.Model.Pizza;
 
 public interface PizzaRepository extends CrudRepository<Pizza, Integer> {
 
-	public String countByName(String name);
+	public Integer countByName(String name);
 }

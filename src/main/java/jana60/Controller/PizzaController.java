@@ -44,36 +44,34 @@ public class PizzaController {
 	public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br, Model model) {
 		boolean hasErrors = br.hasErrors();
 		boolean validateName = true;
-		if (formPizza.getId() != null) {
+		if (formPizza.getId() != null) { // sono in edit e non in create
 			Pizza pizzaBeforeUpdate = repo.findById(formPizza.getId()).get();
 
 			if (pizzaBeforeUpdate.getName().equals(formPizza.getName())) {
 				validateName = false;
 			}
 		}
-		if (validateName && repo.countByName(formPizza.getName()) != null) {
-			br.addError(new FieldError("pizza", "name", "I nomi delle pizze devono essere unici"));
+		// testo se name è univoco
+		if (validateName && repo.countByName(formPizza.getName()) > 0) {
+			br.addError(new FieldError("pizza", "name", "Name must be unique"));
 			hasErrors = true;
-		}
-
-		if (br.hasErrors()) {
-			return "/pizza/add";
 		}
 
 		if (hasErrors) {
 			// se ci sono errori non salvo la pizza su database ma ritorno alla form
 			// precaricata
-			return "/pizza/edit";
+			return "/pizza/add";
 		} else {
 			// se non ci sono errori salvo la pizza che arriva dalla form
 			try {
 				repo.save(formPizza);
 			} catch (Exception e) { // gestisco eventuali eccezioni sql
 				model.addAttribute("errorMessage", "Unable to save the Pizza");
-				return "/pizza/edit";
+				return "/pizza/add";
 			}
 			return "redirect:/";
 		}
+
 	}
 
 	@GetMapping("/edit/{id}")

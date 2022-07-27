@@ -10,9 +10,9 @@
   <th:block th:if="${successMessage != null && successMessage != ''}">
 	  		<div th:text="${successMessage}" class="alert alert-success text-dark"></div>
 	  	</th:block>
-    <h1>Le nostre pizze</h1>
+    <h1>Le nostre bibite</h1>
     <div> 
-    <a class="btn btn-primary" th:href="@{/add}">New Pizza</a>
+    <a class="btn btn-primary" th:href="@{/add}">New Drink</a>
     </div>
     
     <div class="container text-center w-75 mt-3">
@@ -21,15 +21,14 @@
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Descrizione</th>
               <th>Prezzo</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="pizza : ${pizzaList}">
-              <td th:text="${pizza.name}"></td>
-              <td th:text="${pizza.description}"></td>
-              <td th:text="${pizza.price}"></td>
+            <tr th:each="drink : ${drinkList}">
+              <td th:text="${drink.name}"></td>
+              <td th:text="${drink.description}"></td>
+              <td th:text="${drink.price}"></td>
               <td>
 	  				<a class="btn btn-primary" th:href="@{|/edit/${pizza.Id}|}" title="Edit">
 	  					<i class="fa-solid fa-pen-to-square"></i>
