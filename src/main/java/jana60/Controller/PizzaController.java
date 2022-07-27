@@ -40,17 +40,22 @@ public class PizzaController {
 		return "/pizza/add";
 	}
 
-	@PostMapping("/save") // sezione di aggiunta della pizza al database
+	@PostMapping("/add") // sezione di aggiunta della pizza al database
 	public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br, Model model) {
 		boolean hasErrors = br.hasErrors();
 		boolean validateName = true;
+		System.out.println(formPizza.getId());
+		System.out.println(formPizza.getName());
 		if (formPizza.getId() != null) { // sono in edit e non in create
 			Pizza pizzaBeforeUpdate = repo.findById(formPizza.getId()).get();
-
+			System.out.println(pizzaBeforeUpdate.getName());
+			System.out.println(formPizza.getName());
 			if (pizzaBeforeUpdate.getName().equals(formPizza.getName())) {
 				validateName = false;
+
 			}
 		}
+		System.out.println(validateName);
 		// testo se name è univoco
 		if (validateName && repo.countByName(formPizza.getName()) > 0) {
 			br.addError(new FieldError("pizza", "name", "Name must be unique"));

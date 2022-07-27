@@ -16,6 +16,8 @@
 	        
 	        <li class="nav-item">
 	          <a class="nav-link" th:classAppend="${current == 'pizza'} ? active : not-active" href="/">Pizza</a>
+	        </li><li class="nav-item">
+	          <a class="nav-link" th:classAppend="${current == 'ingredienti'} ? active : not-active" href="/ingredienti">Ingredients</a>
 	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link" th:classAppend="${current == 'bibite'} ? active : not-active" href="/bibite">Drink</a>
