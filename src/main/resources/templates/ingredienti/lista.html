@@ -2,26 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <th:block th:replace="fragments/risorse :: risorse-head"></th:block>
-<title>Categories</title>
+<title>Federica's Pizza</title>
 </head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar('ingredienti')"></nav>
 	<div class="container">
-		<h1>I nostri ingredienti</h1>
+		<h1>Ingredienti</h1>
 		<hr />
 		<div class="col-6">
+		
 		<!-- Inizio della Form -->
 			<form 
-				id="form-ingrdienti" 
+				id="form-ingredienti" 
 				th:object="${newIngredienti}"
-				th:action="@{/save}" 
+				th:action="@{/ingredienti/save}" 
 				method="POST">
 				
 				<div class="input-group mb-3 has-validation">
 					<input th:field="*{name}" type="text" class="form-control"
 						placeholder="Add a ingredients" aria-label="Add a ingredients"
 						aria-describedby="category-button" th:errorClass="is-invalid">
-					<button class="btn btn-primary" type="submit" id="ingredients-button">Save</button>
+					<button class="btn btn-primary" type="submit" id="category-button">Save</button>
 					<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
 						<ul>
 							<li th:each="err : ${#fields.errors('name')}" th:text="${err}">
@@ -31,25 +32,29 @@
 				
 			</form>
 			<!--  fine della form -->
+			
 			<!--  inizio della lista  -->
+			
+			
 			<ul class="list-group" th:if="${ingredienti.size() > 0}">
-				<li class="list-group-item" th:each="cat : ${ingredienti}">
-					<span th:text="${i.name}"></span>
-					<span 
-						class="badge rounded-pill text-bg-info" 
-						th:text="${i.pizza.size()}" 
-					</span>					
+				<li class="list-group-item" th:each="ingredienti : ${ingredienti}">
+					<span th:text="${ingredienti.name}"></span>
+					<span class="d-grid  d-md-flex justify-content-md-end"> <a class="btn btn-outline-primary me-md-2 btn-sm" 
+					th:href="@{|ingredienti/elimina/${ingredienti.id}|}" title="Delete" onclick="return confirm('Are your sure?')">
+	  					
+	  					<i class="fa-solid fa-trash-can"></i>	</a> </span>			
 				</li>
 			</ul>
+			
 			<!-- se la lista è vuota -->
 			<div class="alert alert-info my-5"
 				th:unless="${ingredienti.size() > 0}">
 				<h3>There are no ingredients yet</h3>
 			</div>
-			<!--  fine della lista -->
-		</div>
+			<!--  fine lista -->
+		</divclass="d-grid gap-2 d-md-flex justify-content-md-end">
 	</div>
 
-	
+
 </body>
 </html>

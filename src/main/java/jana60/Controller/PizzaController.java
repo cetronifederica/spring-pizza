@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jana60.Model.Pizza;
+import jana60.Repository.IngredientiRepository;
 import jana60.Repository.PizzaRepository;
 
 @Controller
@@ -27,6 +28,9 @@ public class PizzaController {
 
 	@Autowired
 	private PizzaRepository repo;
+
+	@Autowired
+	private IngredientiRepository ingRepo;
 
 	@GetMapping
 	private String pizza(Model model) {
@@ -37,6 +41,7 @@ public class PizzaController {
 	@GetMapping("/add")
 	public String pizzaForm(Model model) {
 		model.addAttribute("pizza", new Pizza());
+		model.addAttribute("ingredienti", ingRepo.findAll());
 		return "/pizza/add";
 	}
 
@@ -44,18 +49,14 @@ public class PizzaController {
 	public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br, Model model) {
 		boolean hasErrors = br.hasErrors();
 		boolean validateName = true;
-		System.out.println(formPizza.getId());
-		System.out.println(formPizza.getName());
 		if (formPizza.getId() != null) { // sono in edit e non in create
 			Pizza pizzaBeforeUpdate = repo.findById(formPizza.getId()).get();
-			System.out.println(pizzaBeforeUpdate.getName());
-			System.out.println(formPizza.getName());
+
 			if (pizzaBeforeUpdate.getName().equals(formPizza.getName())) {
 				validateName = false;
 
 			}
 		}
-		System.out.println(validateName);
 		// testo se name è univoco
 		if (validateName && repo.countByName(formPizza.getName()) > 0) {
 			br.addError(new FieldError("pizza", "name", "Name must be unique"));
@@ -65,6 +66,7 @@ public class PizzaController {
 		if (hasErrors) {
 			// se ci sono errori non salvo la pizza su database ma ritorno alla form
 			// precaricata
+			model.addAttribute("ingredienti", ingRepo.findAll());
 			return "/pizza/add";
 		} else {
 			// se non ci sono errori salvo la pizza che arriva dalla form
@@ -85,6 +87,7 @@ public class PizzaController {
 
 		if (result.isPresent()) {
 
+			model.addAttribute("ingredienti", ingRepo.findAll());
 			model.addAttribute("pizza", result.get());
 			return "/pizza/add";
 		} else {

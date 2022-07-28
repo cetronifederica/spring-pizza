@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.DecimalMax;
@@ -37,8 +35,6 @@ public class Pizza {
 	private Double price;
 
 	@ManyToMany
-	@JoinTable(name = "pizza_ingredienti", joinColumns = { @JoinColumn(name = "pizza_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "ingredienti_id") })
 	private List<Ingredienti> ingredienti;
 
 	// getter e setter

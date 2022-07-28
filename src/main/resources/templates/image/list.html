@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/risorse :: risorse-head"></th:block>
+<title>Federica's Pizza</title>
+</head>
+<body>
+	<nav th:replace="fragments/navbar :: navbar('pizza')"></nav>
+	<div class="container">
+		<h1>Pizza Image</h1>
+		<hr />
+		<div class="col-6">
+		
+		<!-- Inizio della Form mappata su un oggetto di tipo ImageForm, non image-->
+			<form 
+				id="form-image" 
+				th:object="${imageForm}"
+				th:action="@{/image/save}" 
+				method="POST"
+				encType ="multipart/form-data"
+				>
+				<input type="hidden" th:field="*{pizza}">
+				<div class="mb-3">
+                      <label for="contenutoMultipart" class="form-label">Add a image</label>
+                      <input class="form-control" type="file" id="contenutoMultipart" th:field="*{contenutoMultipart}">
+                        </div>
+                 <button type="submit"> Save </button>
+				
+			</form>
+			<!--  fine della form -->
+			
+			<!--  inizio della lista  -->
+			<div class="row">
+			<div class="col-3" th:each="img : ${imageList}">
+			<img th:src="" class="img-fluid" alt="">
+			</div>
+			</div>
+			
+			
+			
+			
+			<!--  fine lista -->
+		</divclass="d-grid gap-2 d-md-flex justify-content-md-end">
+	</div>
+
+
+</body>
+</html>

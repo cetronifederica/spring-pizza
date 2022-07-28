@@ -1,26 +1,25 @@
 package jana60.Model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Ingredienti {
+public class Image {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String name;
+	@Lob
+	private byte[] contenuto;
 
-	@ManyToMany(mappedBy = "ingredienti")
-	private List<Pizza> pizza;
+	@ManyToOne
+	private Pizza pizza;
 
-	// getter e setter
 	public Integer getId() {
 		return id;
 	}
@@ -29,19 +28,19 @@ public class Ingredienti {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public byte[] getContenuto() {
+		return contenuto;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setContenuto(byte[] contenuto) {
+		this.contenuto = contenuto;
 	}
 
-	public List<Pizza> getPizza() {
+	public Pizza getPizza() {
 		return pizza;
 	}
 
-	public void setPizza(List<Pizza> pizza) {
+	public void setPizza(Pizza pizza) {
 		this.pizza = pizza;
 	}
 
