@@ -23,7 +23,7 @@ import jana60.Repository.IngredientiRepository;
 import jana60.Repository.PizzaRepository;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/pizza")
 public class PizzaController {
 
 	@Autowired
