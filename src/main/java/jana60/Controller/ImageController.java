@@ -58,4 +58,15 @@ public class ImageController {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "unable to save image");
 		}
 	}
+//	@RequestMapping(value = "/{imageId}/content", produces = MediaType.IMAGE_JPEG_VALUE)
+//	  public ResponseEntity<byte[]> getImageContent(@PathVariable("imageId") Integer imageId) {
+//	    // recupero il content dal database
+//	    byte[] content = service.getImageContent(imageId);
+//	    // preparo gli headers della response con il tipo di contenuto
+//	    HttpHeaders headers = new HttpHeaders();
+//	    headers.setContentType(MediaType.IMAGE_JPEG);
+//	    // ritorno il contenuto, gli headers e lo status http
+//	    return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
+//	  }
+
 }

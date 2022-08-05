@@ -21,6 +21,7 @@ public class ImageServices {
 	@Autowired
 	private PizzaRepository pizzaRepo;
 
+	// Creiamo lista di immagini per pizza con ID specifico
 	public List<Image> getImageByPizzaId(Integer pizzaId) {
 		Pizza pizza = pizzaRepo.findById(pizzaId).get();
 		return repo.findByPizza(pizza);
@@ -50,5 +51,12 @@ public class ImageServices {
 		// salvo image sul database
 
 		return repo.save(imgSave);
+	}
+
+	public byte[] getImageContenuto(Integer id) {
+
+		Image img = repo.findById(id).get();
+		return img.getContenuto();
+
 	}
 }
